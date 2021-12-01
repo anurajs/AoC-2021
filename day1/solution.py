@@ -33,5 +33,5 @@ for i in range(2, len(input)-1):
     total += 1 if window2 > window1 else 0
 total
 
-# %%
+# %% part 1 in 1 line
 sum([1 if input[index] > input[index-1] else 0 for index in range(1, len(input))])
