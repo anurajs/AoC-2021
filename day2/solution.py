@@ -1,6 +1,6 @@
-with open('puzzle.txt', 'r') as file:
+path = 'input.txt'
+with open(path, 'r') as file:
     input = file.readlines()
-
 
 location = {'depth': 0, 'horizontal': 0}
 location2 = {'depth': 0, 'horizontal': 0, 'aim': 0}
