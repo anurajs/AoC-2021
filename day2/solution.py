@@ -8,15 +8,21 @@ for line in input:
     command, amount = line.split(' ')
     amount = int(amount)
     if command == 'forward':
+        # part 1
         location['horizontal'] += amount
+        # part 2
         location2['horizontal'] += amount
         location2['depth'] += location2['aim'] * amount
     elif command == 'up':
-        location2['aim'] -= amount
+        # part 1
         location['depth'] -= amount
+        # part 2
+        location2['aim'] -= amount
     else:
-        location2['aim'] += amount
+        # part 1
         location['depth'] += amount
+        # part 2
+        location2['aim'] += amount
 
 print('Part 1:', location['horizontal']*location['depth'])
 print('Part 2:', location2['horizontal']*location2['depth'])
