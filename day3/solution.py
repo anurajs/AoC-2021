@@ -13,6 +13,13 @@ def get_count(input):
     return binary_counter
 
 
+def get_count_at(input, i):
+    total = 0
+    for str in input:
+        total += 1 if str[i] == '1' else -1
+    return total
+
+
 def flip_bits(input):
     return ''.join(['1' if x == '0' else '0' for x in input])
 
@@ -38,15 +45,15 @@ oxygen = input.copy()
 co2 = input.copy()
 
 for i in range(len(input[0])):
-    co2_counter = get_count(co2)
-    oxygen_counter = get_count(oxygen)
+    co2_counter = get_count_at(co2, i)
+    oxygen_counter = get_count_at(oxygen, i)
 
-    if oxygen_counter[i] >= 0 and len(oxygen) != 1:
+    if oxygen_counter >= 0 and len(oxygen) != 1:
         oxygen = list(filter(lambda x: x[i] == '1', oxygen))
     elif len(oxygen) != 1:
         oxygen = list(filter(lambda x: x[i] == '0', oxygen))
 
-    if co2_counter[i] >= 0 and len(co2) != 1:
+    if co2_counter >= 0 and len(co2) != 1:
         co2 = list(filter(lambda x: x[i] == '0', co2))
     elif len(co2) != 1:
         co2 = list(filter(lambda x: x[i] == '1', co2))
