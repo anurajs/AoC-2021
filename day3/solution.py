@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 path = 'puzzle.txt'
 with open(path, 'r') as file:
     input = file.readlines()
@@ -13,9 +11,9 @@ def get_count_at(input, i):
 
 
 def get_count(input):
-    binary_counter = defaultdict(lambda: 0)
+    binary_counter = []
     for i in range(len(input[0])):
-        binary_counter[i] = get_count_at(input, i)
+        binary_counter.append(get_count_at(input, i))
     return binary_counter
 
 
