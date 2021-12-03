@@ -13,23 +13,24 @@ def get_count(input):
     return binary_counter
 
 
+def flip_bits(input):
+    return ''.join(['1' if x == '0' else '0' for x in input])
+
+
 input = [x.strip() for x in input]
 
 binary_counter = get_count(input)
 
 gamma = ""
-epsilon = ""
 
 for i in range(len(input[0])):
     if binary_counter[i] < 0:
         gamma += '0'
-        epsilon += '1'
     else:
         gamma += '1'
-        epsilon += '0'
 
+epsilon = int(flip_bits(gamma), 2)
 gamma = int(gamma, 2)
-epsilon = int(epsilon, 2)
 
 print('Part 1: ', gamma * epsilon)
 
@@ -49,9 +50,6 @@ for i in range(len(input[0])):
         co2 = list(filter(lambda x: x[i] == '0', co2))
     elif len(co2) != 1:
         co2 = list(filter(lambda x: x[i] == '1', co2))
-
-    oxygen = [x for x in oxygen]
-    co2 = [x for x in co2]
 
     if len(oxygen) == 1 and len(co2) == 1:
         break
