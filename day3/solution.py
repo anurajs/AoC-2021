@@ -1,5 +1,5 @@
 from collections import defaultdict
-from numpy.core.fromnumeric import argmax
+
 path = 'puzzle.txt'
 with open(path, 'r') as file:
     input = file.readlines()
