@@ -5,19 +5,18 @@ with open(path, 'r') as file:
     input = file.readlines()
 
 
-def get_count(input):
-    binary_counter = defaultdict(lambda: 0)
-    for str in input:
-        for i, value in enumerate(str):
-            binary_counter[i] += 1 if value == '1' else -1
-    return binary_counter
-
-
 def get_count_at(input, i):
     total = 0
     for str in input:
         total += 1 if str[i] == '1' else -1
     return total
+
+
+def get_count(input):
+    binary_counter = defaultdict(lambda: 0)
+    for i in range(len(input[0])):
+        binary_counter[i] = get_count_at(input, i)
+    return binary_counter
 
 
 def flip_bits(input):
