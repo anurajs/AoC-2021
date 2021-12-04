@@ -75,7 +75,6 @@ for line in input[2:]:
     board.append(row)
 boards.append(board)
 
-# print(boards)
-part1_answer = part1(np.array(boards), numbers)
-print(part1_answer)
+
+print(part1(np.array(boards), numbers))
 print(part2(np.array(boards), numbers))
