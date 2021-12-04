@@ -14,12 +14,12 @@ def part1(boards, numbers):
             for column in range(line_size):
                 col = board[:, column:column+1].flatten()
                 if is_winner(col, called):
-                    return part1_score(called, board, number)
+                    return score(called, board, number)
 
             for row in range(line_size):
                 check_row = board[row:row+1, :].flatten()
                 if is_winner(check_row, called):
-                    return part1_score(called, board, number)
+                    return score(called, board, number)
 
 
 def part2(boards, numbers):
@@ -42,10 +42,10 @@ def part2(boards, numbers):
                 if is_winner(check_row, called):
                     winning_boards.add(index)
             if len(winning_boards) == len(boards):
-                return part1_score(called, board, number)
+                return score(called, board, number)
 
 
-def part1_score(called, board, last):
+def score(called, board, last):
     total = 0
     for row in board:
         for item in row:
