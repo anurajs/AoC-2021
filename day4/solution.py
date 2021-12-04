@@ -36,11 +36,14 @@ def part2(boards, numbers):
                 col = board[:, column:column+1].flatten()
                 if is_winner(col, called):
                     winning_boards.add(index)
+                    break
 
             for row in range(line_size):
                 check_row = board[row:row+1, :].flatten()
                 if is_winner(check_row, called):
                     winning_boards.add(index)
+                    break
+
             if len(winning_boards) == len(boards):
                 return score(called, board, number)
 
