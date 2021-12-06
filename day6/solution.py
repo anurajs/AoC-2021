@@ -9,7 +9,6 @@ for key in [int(x) for x in input.split(',')]:
 
 for _ in range(256):
     for i in range(9):
-        amount = fishes[i]
         fishes[i-1] += fishes[i]
         fishes[i] = 0
     born = fishes[-1]
