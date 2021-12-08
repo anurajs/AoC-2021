@@ -53,13 +53,13 @@ def part2(input):
                 popped = index
                 break
         options[5].pop(popped)
-        for index, value in enumerate(options[6]):
+        for value in options[6]:
             if len(line3.difference(value)) == 1:
                 numbers[0] = value
-                popped = index
-                break
-        options[6].pop(popped)
-        numbers[6] = options[6].pop()
+            else:
+                numbers[6] = value
+        options[6].pop()
+        options[6].pop()
         line2 = numbers[0].difference(numbers[6])
         for value in options[5]:
             if len(line2.difference(value)) == 0:
