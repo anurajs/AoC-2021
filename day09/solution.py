@@ -1,4 +1,4 @@
-path = 'input.txt'
+path = 'puzzle.txt'
 with open(path, 'r') as file:
     data = file.readlines()
 
