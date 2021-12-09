@@ -1,4 +1,4 @@
-path = 'puzzle.txt'
+path = 'input.txt'
 with open(path, 'r') as file:
     data = file.readlines()
 
@@ -21,9 +21,9 @@ for i in range(len(data)):
         neighbours = [(1+i, j), (i-1, j), (i, j+1), (i, j-1)]
         lowpoint = True
         for n in neighbours:
-            if n[0] < 0 or n[1] < 0 or n[0] == len(data) or n[1] == len(data[j]):
+            if n[0] < 0 or n[1] < 0 or n[0] == len(data) or n[1] == len(data[i]):
                 continue
-            if current > data[n[0]][n[1]]:
+            if current >= data[n[0]][n[1]]:
                 lowpoint = False
         if lowpoint:
             total += current + 1
