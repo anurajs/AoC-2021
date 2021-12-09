@@ -18,41 +18,18 @@ basins = []
 for i in range(len(data)):
     for j in range(len(data[i])):
         current = data[i][j]
-        if j == 0 and i == 0:
-            if current < data[i+1][j] and current < data[i][j+1]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif i == len(data)-1 and j == len(data[i])-1:
-            if current < data[i-1][j] and current < data[i][j-1]:
-                total += current
-                basins.append(basin(i, j, data, set()))
-        elif i == 0 and j == len(data[i])-1:
-            if current < data[i+1][j] and current < data[i][j-1]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif i == len(data)-1 and j == 0:
-            if current < data[i-1][j] and current < data[i][j+1]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif j == 0:
-            if current < data[i][j+1] and current < data[i-1][j] and current < data[i+1][j]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif j == len(data[i])-1:
-            if current < data[i][j-1] and current < data[i-1][j] and current < data[i+1][j]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif i == 0:
-            if current < data[i+1][j] and current < data[i][j+1] and current < data[i][j-1]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif i == len(data)-1:
-            if current < data[i-1][j] and current < data[i][j+1] and current < data[i][j-1]:
-                total += current + 1
-                basins.append(basin(i, j, data, set()))
-        elif current < data[i][j+1] and current < data[i][j-1] and current < data[i+1][j] and current < data[i-1][j]:
+        neighbours = [(1+i, j), (i-1, j), (i, j+1), (i, j-1)]
+        lowpoint = True
+        for n in neighbours:
+            if n[0] < 0 or n[1] < 0 or n[0] == len(data) or n[1] == len(data[j]):
+                continue
+            if current > data[n[0]][n[1]]:
+                lowpoint = False
+        if lowpoint:
             total += current + 1
-            basins.append(basin(i, j, data, set()))
+            size = basin(i, j, data, set())
+            basins.append(size)
+
 
 basins.sort(reverse=True)
 
