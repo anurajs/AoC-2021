@@ -46,7 +46,6 @@ for line in data:
             character = stack.pop()
             score *= 5
             score += completion[corresponding[character]]
-
         scores.append(score)
 
 
