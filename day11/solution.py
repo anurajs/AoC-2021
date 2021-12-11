@@ -34,7 +34,8 @@ def solve(data):
                         flash_surrounding(data, i, j)
                         flash_set.add((i, j))
                         flashed = True
-                        count += 1
+                        if step <= 100:
+                            count += 1
             if not flashed:
                 break
         data[data > 9] = 0
@@ -43,4 +44,7 @@ def solve(data):
     return count, step
 
 
-print(solve(data))
+part1, part2 = solve(data)
+
+print('Part 1: ', part1)
+print('Part 2: ', part2)
