@@ -16,11 +16,7 @@ def traverse(node, path, edgeList, paths, visited, smalled):
                 continue
             else:
                 small = True
-        new_path = path.copy()
-        new_path.append(con)
-        new_visited = visited.copy()
-        new_visited.add(con)
-        traverse(con, new_path, edgeList, paths, new_visited, small)
+        traverse(con, [*path, con], edgeList, paths, {*visited, con}, small)
 
 
 edgeList = dict()
