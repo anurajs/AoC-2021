@@ -17,6 +17,7 @@ def traverse(node, path, edgeList, paths, visited, smalled):
             else:
                 small = True
         traverse(con, [*path, con], edgeList, paths, {*visited, con}, small)
+    return paths
 
 
 edgeList = dict()
@@ -32,10 +33,8 @@ for edges in data:
     else:
         edgeList[end].add(start)
 
-paths1 = []
-paths2 = []
-traverse('start', ['start'], edgeList, paths1, {'start'}, True)
-traverse('start', ['start'], edgeList, paths2, {'start'}, False)
+part1 = traverse('start', ['start'], edgeList, [], {'start'}, True)
+part2 = traverse('start', ['start'], edgeList, [], {'start'}, False)
 
-print('Part 1: ', len(paths1))
-print('Part 2: ', len(paths2))
+print('Part 1: ', len(part1))
+print('Part 2: ', len(part2))
