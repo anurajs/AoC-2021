@@ -9,9 +9,9 @@ def traverse(node, path, edgeList, paths, visited, smalled):
         return
     for con in edgeList[node]:
         small = smalled
-        if (con == 'start'):
+        if con == 'start':
             continue
-        if (con in visited and con.islower()):
+        if con in visited and con.islower():
             if smalled:
                 continue
             else:
