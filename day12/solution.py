@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 path = 'puzzle.txt'
 with open(path) as file:
     data = file.readlines()
@@ -20,18 +22,12 @@ def traverse(node, path, edgeList, paths, visited, smalled):
     return paths
 
 
-edgeList = dict()
+edgeList = defaultdict(lambda: set())
 for edges in data:
     edges = edges.strip().split('-')
     start, end = edges
-    if start not in edgeList:
-        edgeList[start] = {end}
-    else:
-        edgeList[start].add(end)
-    if end not in edgeList:
-        edgeList[end] = {start}
-    else:
-        edgeList[end].add(start)
+    edgeList[start].add(end)
+    edgeList[end].add(start)
 
 part1 = traverse('start', ['start'], edgeList, [], {'start'}, True)
 part2 = traverse('start', ['start'], edgeList, [], {'start'}, False)
