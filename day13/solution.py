@@ -50,5 +50,10 @@ grid[grid == 0] = 0
 grid = grid.astype(str)
 grid[grid == '0.0'] = ' '
 grid[grid == '1.0'] = '#'
-print(grid)
+print('Part 2: ')
+for line in grid:
+    s = ''
+    for c in line:
+        s += c
+    print(s)
 np.savetxt('output.csv', grid, '%c', delimiter=',')
