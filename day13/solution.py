@@ -27,10 +27,7 @@ def fold_vertical(grid, position):
 
 
 def fold_horizontal(grid, position):
-    new_grid = np.array(grid.T[:position])
-    for index, line in enumerate(grid.T[position+1:min(len(grid.T), position*2)+1]):
-        for j in range(len(line)):
-            new_grid[position-1 - index][j] += line[j]
+    new_grid = fold_vertical(grid.T, position)
     return new_grid.T
 
 
