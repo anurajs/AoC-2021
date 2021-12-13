@@ -56,4 +56,3 @@ for line in grid:
     for c in line:
         s += c
     print(s)
-np.savetxt('output.csv', grid, '%c', delimiter=',')
