@@ -22,7 +22,6 @@ def fold_vertical(grid, position):
     for index, line in enumerate(grid[position+1:min(len(grid), position*2)+1]):
         for j in range(len(line)):
             new_grid[position-1 - index][j] += line[j]
-
     return new_grid
 
 
