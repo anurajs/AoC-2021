@@ -19,7 +19,7 @@ for x, y in points:
 
 def fold_vertical(grid, position):
     new_grid = np.array(grid[:position])
-    for index, line in enumerate(grid[position+1:min(len(grid), position*2)+1]):
+    for index, line in enumerate(grid[position+1:min(len(grid), (position*2+1))]):
         for j in range(len(line)):
             new_grid[position-1 - index][j] += line[j]
     return new_grid
@@ -30,19 +30,17 @@ def fold_horizontal(grid, position):
     return new_grid.T
 
 
-direction, amount = folds[0].split('=')
-amount = int(amount)
-part1 = fold_vertical(
-    grid, amount)if direction == 'y' else fold_horizontal(grid, amount)
+d, a = folds[0].split('=')
+a = int(a)
+part1 = fold_vertical(grid, a) if d == 'y' else fold_horizontal(grid, a)
 part1 = len(part1[part1 > 0])
 
 print('Part 1: ', part1)
 
 for fold in folds:
-    direction, amount = fold.split('=')
-    amount = int(amount)
-    grid = fold_vertical(
-        grid, amount)if direction == 'y' else fold_horizontal(grid, amount)
+    d, a = fold.split('=')
+    a = int(a)
+    grid = fold_vertical(grid, a) if d == 'y' else fold_horizontal(grid, a)
 
 grid[grid > 0] = 1
 grid[grid == 0] = 0
