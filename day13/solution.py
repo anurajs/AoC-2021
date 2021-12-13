@@ -47,6 +47,8 @@ for fold in folds:
 
 grid[grid > 0] = 1
 grid[grid == 0] = 0
-grid = grid.astype(int)
+grid = grid.astype(str)
+grid[grid == '0.0'] = ' '
+grid[grid == '1.0'] = '#'
 print(grid)
-np.savetxt('output.csv', grid, '%01d', delimiter=',')
+np.savetxt('output.csv', grid, '%c', delimiter=',')
