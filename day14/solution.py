@@ -1,6 +1,6 @@
 from collections import defaultdict
 import sys
-path = sys.argv[1] or 'puzzle.txt'
+path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
     data = file.readlines()
 
