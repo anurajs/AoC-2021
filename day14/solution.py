@@ -11,8 +11,6 @@ for rule in data[2:]:
 
 
 def get_counts(template, rules, amount):
-    counts = defaultdict(lambda: 0)
-
     rule_counts = defaultdict(lambda: 0)
     for i in range(1, len(template)):
         rule = template[i-1:i+1]
@@ -20,22 +18,23 @@ def get_counts(template, rules, amount):
 
     for _ in range(amount):
         new_rule_counts = defaultdict(lambda: 0)
-        for rule in rule_counts:
+        for rule, count in rule_counts.items():
             output = rules[rule]
             rule1 = rule[:1] + output
             rule2 = output + rule[1:]
-            new_rule_counts[rule1] += rule_counts[rule]
-            new_rule_counts[rule2] += rule_counts[rule]
+            new_rule_counts[rule1] += count
+            new_rule_counts[rule2] += count
         rule_counts = new_rule_counts
+
+    counts = defaultdict(lambda: 0)
+    ends = {template[0], template[-1]}
 
     for rule in rule_counts:
         counts[rule[:1]] += rule_counts[rule]
         counts[rule[1:]] += rule_counts[rule]
 
-    ends = {template[0], template[-1]}
-
-    for letter in counts:
-        counts[letter] = (counts[letter] + 1*(letter in ends)) // 2
+    for letter, count in counts.items():
+        counts[letter] = (count + 1*(letter in ends)) // 2
     return counts
 
 
