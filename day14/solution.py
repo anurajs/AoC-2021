@@ -1,5 +1,6 @@
 from collections import defaultdict
-path = 'puzzle.txt'
+import sys
+path = sys.argv[1] or 'puzzle.txt'
 with open(path) as file:
     data = file.readlines()
 
