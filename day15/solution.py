@@ -12,6 +12,10 @@ def get_dist(data, x, y):
     return (data[y % len(data)][x % len(data[0])] + (x//len(data[0])) + (y//len(data)) - 1) % 9 + 1
 
 
+def gen_neighbours(x, y):
+    return [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+
+
 def solve(data, end):
     start = (0, 0)
     current = start
@@ -22,8 +26,7 @@ def solve(data, end):
     visited = set()
     while current != end:
         visited.add(current)
-        neighbours = [(current[0] + 1, current[1]), (current[0]-1, current[1]),
-                      (current[0], current[1] + 1), (current[0], current[1]-1)]
+        neighbours = gen_neighbours(current[0], current[1])
         for (x, y) in neighbours:
             if not(y == end[1] + 1 or x == end[0] + 1 or x < 0 or y < 0) and (x, y) not in visited:
                 alt = distances[current] + get_dist(data, x, y)
