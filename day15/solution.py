@@ -1,5 +1,4 @@
 import sys
-import time
 import heapq
 from collections import defaultdict
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
