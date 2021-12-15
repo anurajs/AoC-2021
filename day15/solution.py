@@ -17,21 +17,23 @@ def part1(data):
     distances = defaultdict(lambda: float('inf'))
     previous = dict()
     distances[start] = 0
-    available = {(0, 0)}
+    available = []
+    heapq.heappush(available, (0, start))
     visited = set()
     while current != end:
         visited.add(current)
-        available.remove(current)
         neighbours = [(current[0] + 1, current[1]), (current[0]-1, current[1]),
                       (current[0], current[1] + 1), (current[0], current[1]-1)]
         for (x, y) in neighbours:
             if not(y == len(data) or x == len(data[y]) or x < 0 or y < 0) and (x, y) not in visited:
-                available.add((x, y))
                 alt = distances[current] + data[y][x]
                 if alt < distances[(x, y)]:
                     distances[(x, y)] = alt
                     previous[(x, y)] = current
-        current = min(available, key=lambda x: distances[x])
+                    heapq.heappush(available, (alt, (x, y)))
+        _, current = heapq.heappop(available)
+        while current in visited:
+            _, current = heapq.heappop(available)
 
     path = [end]
     nxt = end
@@ -69,6 +71,8 @@ def part2(data):
                     previous[(x, y)] = current
                     heapq.heappush(available, (alt, (x, y)))
         _, current = heapq.heappop(available)
+        while current in visited:
+            _, current = heapq.heappop(available)
 
     path = [end]
     nxt = end
