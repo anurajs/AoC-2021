@@ -31,7 +31,6 @@ def solve(data, end):
                     distances[(x, y)] = alt
                     previous[(x, y)] = current
                     heapq.heappush(available, (alt, (x, y)))
-        _, current = heapq.heappop(available)
         while current in visited:
             _, current = heapq.heappop(available)
 
