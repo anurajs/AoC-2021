@@ -1,4 +1,6 @@
 import sys
+import time
+import heapq
 from collections import defaultdict
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
@@ -49,16 +51,15 @@ def part2(data):
     distances = defaultdict(lambda: float('inf'))
     previous = dict()
     distances[start] = 0
-    available = {(0, 0)}
+    available = []
+    heapq.heappush(available, (0, start))
     visited = set()
     while current != end:
         visited.add(current)
-        available.remove(current)
         neighbours = [(current[0] + 1, current[1]), (current[0]-1, current[1]),
                       (current[0], current[1] + 1), (current[0], current[1]-1)]
         for (x, y) in neighbours:
             if not(y == end[1] + 1 or x == end[0] + 1 or x < 0 or y < 0) and (x, y) not in visited:
-                available.add((x, y))
                 dist = (data[y % len(data)][x % len(data[0])] +
                         (x//len(data[0])) + (y//len(data))) % 9
                 dist = 9 if dist == 0 else dist
@@ -66,8 +67,8 @@ def part2(data):
                 if alt < distances[(x, y)]:
                     distances[(x, y)] = alt
                     previous[(x, y)] = current
-        current = min(
-            available, key=lambda x: distances[x])
+                    heapq.heappush(available, (alt, (x, y)))
+        _, current = heapq.heappop(available)
 
     path = [end]
     nxt = end
@@ -84,5 +85,8 @@ def part2(data):
     return total
 
 
+start = time.time()
 print('Part 1: ', part1(data))
 print('Part 2: ', part2(data))
+end = time.time()
+print(end-start)
