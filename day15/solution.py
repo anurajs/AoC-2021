@@ -89,8 +89,5 @@ def part2(data):
     return total
 
 
-start = time.time()
 print('Part 1: ', part1(data))
 print('Part 2: ', part2(data))
-end = time.time()
-print(end-start)
