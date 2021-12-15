@@ -17,7 +17,6 @@ def part1(data):
     previous = dict()
     distances[start] = 0
     available = []
-    heapq.heappush(available, (0, start))
     visited = set()
     while current != end:
         visited.add(current)
@@ -45,7 +44,6 @@ def part2(data):
     previous = dict()
     distances[start] = 0
     available = []
-    heapq.heappush(available, (0, start))
     visited = set()
     while current != end:
         visited.add(current)
