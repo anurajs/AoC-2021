@@ -36,6 +36,10 @@ def part1(data):
     return distances[end]
 
 
+def get_dist(data, x, y):
+    return (data[y % len(data)][x % len(data[0])] + (x//len(data[0])) + (y//len(data)) - 1) % 9 + 1
+
+
 def part2(data):
     start = (0, 0)
     end = (len(data[0]) * 5 - 1, len(data) * 5 - 1)
@@ -51,10 +55,7 @@ def part2(data):
                       (current[0], current[1] + 1), (current[0], current[1]-1)]
         for (x, y) in neighbours:
             if not(y == end[1] + 1 or x == end[0] + 1 or x < 0 or y < 0) and (x, y) not in visited:
-                dist = (data[y % len(data)][x % len(data[0])] +
-                        (x//len(data[0])) + (y//len(data))) % 9
-                dist = 9 if dist == 0 else dist
-                alt = distances[current] + dist
+                alt = distances[current] + get_dist(data, x, y)
                 if alt < distances[(x, y)]:
                     distances[(x, y)] = alt
                     previous[(x, y)] = current
