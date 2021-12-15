@@ -35,15 +35,7 @@ def part1(data):
         while current in visited:
             _, current = heapq.heappop(available)
 
-    path = [end]
-    nxt = end
-    while nxt in previous:
-        path.append(previous[nxt])
-        nxt = previous[nxt]
-    total = 0
-    for (x, y) in path[1:]:
-        total += data[y][x]
-    return total
+    return distances[end]
 
 
 def part2(data):
@@ -74,19 +66,7 @@ def part2(data):
         while current in visited:
             _, current = heapq.heappop(available)
 
-    path = [end]
-    nxt = end
-    while nxt in previous:
-        path.append(previous[nxt])
-        nxt = previous[nxt]
-    total = 0
-    for (x, y) in path[:-1]:
-        dist = (data[y % len(data)][x % len(
-            data[0])] + 1*(x//len(data[0])) + 1*(y//len(data))) % 9
-        dist = 9 if dist == 0 else dist
-        total += dist
-
-    return total
+    return distances[end]
 
 
 print('Part 1: ', part1(data))
