@@ -42,10 +42,6 @@ def part1(data):
     return total
 
 
-def manhattan_distance(current, goal):
-    return (abs(goal[0] - current[0]) + abs(goal[1] - current[1]))
-
-
 def part2(data):
     start = (0, 0)
     end = (len(data[0]) * 5 - 1, len(data) * 5 - 1)
@@ -71,7 +67,7 @@ def part2(data):
                     distances[(x, y)] = alt
                     previous[(x, y)] = current
         current = min(
-            available, key=lambda x: distances[x] + manhattan_distance(x, end))
+            available, key=lambda x: distances[x])
 
     path = [end]
     nxt = end
