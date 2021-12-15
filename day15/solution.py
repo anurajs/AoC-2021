@@ -32,47 +32,12 @@ def part1(data):
         current = min(available, key=lambda x: distances[x])
 
     path = [end]
-    nxt = previous[end]
+    nxt = end
     while nxt in previous:
         path.append(previous[nxt])
         nxt = previous[nxt]
     total = 0
-    for (x, y) in path:
-        total += data[y][x]
-    return total
-
-
-def part1(data):
-    start = (0, 0)
-    end = (len(data[0])-1, len(data)-1)
-    current = start
-
-    distances = defaultdict(lambda: float('inf'))
-    previous = dict()
-    distances[start] = 0
-    available = {(0, 0)}
-    visited = set()
-    while current != end:
-        visited.add(current)
-        available.remove(current)
-        neighbours = [(current[0] + 1, current[1]), (current[0]-1, current[1]),
-                      (current[0], current[1] + 1), (current[0], current[1]-1)]
-        for (x, y) in neighbours:
-            if not(y == len(data) or x == len(data[y]) or x < 0 or y < 0) and (x, y) not in visited:
-                available.add((x, y))
-                alt = distances[current] + data[y][x]
-                if alt < distances[(x, y)]:
-                    distances[(x, y)] = alt
-                    previous[(x, y)] = current
-        current = min(available, key=lambda x: distances[x])
-
-    path = [end]
-    nxt = previous[end]
-    while nxt in previous:
-        path.append(previous[nxt])
-        nxt = previous[nxt]
-    total = 0
-    for (x, y) in path:
+    for (x, y) in path[1:]:
         total += data[y][x]
     return total
 
@@ -83,9 +48,8 @@ def manhattan_distance(current, goal):
 
 def part2(data):
     start = (0, 0)
-    end = (len(data[0]) * 5 - 1, len(data)*5 - 1)
+    end = (len(data[0]) * 5 - 1, len(data) * 5 - 1)
     current = start
-
     distances = defaultdict(lambda: float('inf'))
     previous = dict()
     distances[start] = 0
@@ -99,8 +63,8 @@ def part2(data):
         for (x, y) in neighbours:
             if not(y == end[1] + 1 or x == end[0] + 1 or x < 0 or y < 0) and (x, y) not in visited:
                 available.add((x, y))
-                dist = (data[y % len(data)][x % len(
-                    data[0])] + 1*(x//len(data[0])) + 1*(y//len(data))) % 9
+                dist = (data[y % len(data)][x % len(data[0])] +
+                        (x//len(data[0])) + (y//len(data))) % 9
                 dist = 9 if dist == 0 else dist
                 alt = distances[current] + dist
                 if alt < distances[(x, y)]:
@@ -110,16 +74,17 @@ def part2(data):
             available, key=lambda x: distances[x] + manhattan_distance(x, end))
 
     path = [end]
-    nxt = previous[end]
+    nxt = end
     while nxt in previous:
         path.append(previous[nxt])
         nxt = previous[nxt]
     total = 0
-    for (x, y) in path:
+    for (x, y) in path[:-1]:
         dist = (data[y % len(data)][x % len(
             data[0])] + 1*(x//len(data[0])) + 1*(y//len(data))) % 9
-        total += 9 if dist == 0 else dist
-    for (x, y) in path
+        dist = 9 if dist == 0 else dist
+        total += dist
+
     return total
 
 
