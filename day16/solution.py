@@ -44,7 +44,7 @@ def parse_packet(packet):
         if type == 0:
             value = sum(values)
         elif type == 1:
-            value = reduce(lambda acc, x: x*acc, values, 1)
+            value = reduce(lambda acc, x: x*acc, values)
         elif type == 2:
             value = min(values)
         elif type == 3:
