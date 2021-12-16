@@ -10,9 +10,9 @@ def parse_packet(packet):
     version = int(packet[:3], 2)
     version_sum += version
     type = int(packet[3:6], 2)
-    offset = 6
     if type == 4:
         value = ""
+        offset = 6
         while packet[offset] == '1':
             value += packet[offset+1:offset+5]
             offset += 5
