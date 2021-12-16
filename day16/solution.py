@@ -53,11 +53,11 @@ def parse_packet(packet):
         elif type == 3:
             value = max(values)
         elif type == 5:
-            value = 1 if values[0] > values[1] else 0
+            value = 1*(values[0] > values[1])
         elif type == 6:
-            value = 1 if values[0] < values[1] else 0
+            value = 1*(values[0] < values[1])
         elif type == 7:
-            value = 1 if values[0] == values[1] else 0
+            value = 1*(values[0] == values[1])
     return total_length, version_sum, value
 
 
