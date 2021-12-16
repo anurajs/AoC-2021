@@ -26,8 +26,7 @@ def solve(data, end):
     visited = set()
     while current != end:
         visited.add(current)
-        neighbours = gen_neighbours(current[0], current[1])
-        for (x, y) in neighbours:
+        for (x, y) in gen_neighbours(current[0], current[1]):
             if not(y == end[1] + 1 or x == end[0] + 1 or x < 0 or y < 0) and (x, y) not in visited:
                 alt = distances[current] + get_dist(data, x, y)
                 if alt < distances[(x, y)]:
