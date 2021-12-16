@@ -1,4 +1,5 @@
 import sys
+from functools import reduce
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
     data = file.readline().strip()
@@ -46,9 +47,7 @@ def parse_packet(packet):
         if type == 0:
             value = sum(values)
         elif type == 1:
-            value = 1
-            for v in values:
-                value *= v
+            value = reduce(lambda acc, x: x*acc, values, 1)
         elif type == 2:
             value = min(values)
         elif type == 3:
