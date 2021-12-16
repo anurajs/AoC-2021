@@ -13,7 +13,7 @@ def parse_packet(packet):
     if type == 4:
         value = ""
         offset = 6
-        while packet[offset] == '1':
+        while int(packet[offset]) == 1:
             value += packet[offset+1:offset+5]
             offset += 5
         value += packet[offset+1:offset+5]
