@@ -25,12 +25,12 @@ def parse_packet(packet):
         length_id = int(packet[6], 2)
         if length_id == 1:
             subpacket_start = 7 + 11
+            subpacket_count = int(packet[7:subpacket_start], 2)
             def comparator(): return current_packet < subpacket_count
         else:
             subpacket_start = 7 + 15
             subpacket_length = int(packet[7:subpacket_start], 2)
             def comparator(): return offset < subpacket_length + subpacket_start
-        subpacket_count = int(packet[7:subpacket_start], 2)
         offset = subpacket_start
         current_packet = 0
         while comparator():
