@@ -61,26 +61,7 @@ def parse_packet(packet):
     return total_length, version_sum, value
 
 
-hex_to_bin = {
-    "0": "0000",
-    "1": "0001",
-    "2": "0010",
-    "3": "0011",
-    "4": "0100",
-    "5": "0101",
-    "6": "0110",
-    "7": "0111",
-    "8": "1000",
-    "9": "1001",
-    "A": "1010",
-    "B": "1011",
-    "C": "1100",
-    "D": "1101",
-    "E": "1110",
-    "F": "1111",
-}
-
-packet = ''.join([hex_to_bin[x] for x in data])
+packet = ''.join([f"{int(bin(int(x, 16))[2:]):04d}" for x in data])
 
 _, part1, part2 = parse_packet(packet)
 print('Part 1: ', part1)
