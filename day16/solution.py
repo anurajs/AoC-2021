@@ -11,15 +11,15 @@ def parse_packet(packet):
     version_sum += version
     type = int(packet[3:6], 2)
     if type == 4:
-        value = ""
+        val = ""
         offset = 6
         while int(packet[offset], 2) == 1:
-            value += packet[offset+1:offset+5]
+            val += packet[offset+1:offset+5]
             offset += 5
-        value += packet[offset+1:offset+5]
+        val += packet[offset+1:offset+5]
         offset += 5
         total_length = offset
-        value = int(value, 2)
+        value = int(val, 2)
     else:
         values = []
         length_id = int(packet[6], 2)
