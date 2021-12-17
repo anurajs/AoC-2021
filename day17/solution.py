@@ -37,7 +37,7 @@ for ivy in range(y[0], abs(y[0])+1):
     for step in range(300):
         yd += vy
         vy -= 1
-        if yd in range(y[0], y[1]+1) and len(valid_step[step]) > 0:
+        if yd in range(y[0], y[1]+1) and step in valid_step:
             target_hit = True
             ivxs = ivxs.union(valid_step[step])
         if yd > max_yd:
