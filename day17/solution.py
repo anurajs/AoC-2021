@@ -24,7 +24,8 @@ for ivx in range(x[1]+1):
             vx -= 1
         if xd in range(x[0], x[1] + 1):
             valid_step[step].add(ivx)
-
+        if xd > x[1]:
+            break
 count = 0
 for ivy in range(y[0], max(y[1], abs(y[0]))+1):
     yd = 0
@@ -36,11 +37,13 @@ for ivy in range(y[0], max(y[1], abs(y[0]))+1):
     for step in range(300):
         yd += vy
         vy -= 1
+        if yd > max_yd:
+            max_yd = yd
         if yd in range(y[0], y[1]+1) and step in valid_step:
             target_hit = True
             ivxs |= valid_step[step]
-        if yd > max_yd:
-            max_yd = yd
+        if yd > y[1] and target_hit:
+            break
     if target_hit and max_yd > yd_god:
         yd_god = max_yd
         god_speed = (ivxs, ivy)
