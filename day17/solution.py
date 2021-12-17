@@ -1,4 +1,4 @@
-# from collections import defaultdict
+from collections import defaultdict
 import sys
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
@@ -12,35 +12,40 @@ y = [int(v) for v in y]
 
 yd_god = float('-inf')
 
+valid_step = defaultdict(lambda: set())
+
+for ivx in range(200):
+    xd = 0
+    vx = ivx
+    step = 0
+    for step in range(250):
+        xd += vx
+        if vx > 0:
+            vx -= 1
+        if xd in range(x[0], x[1] + 1):
+            valid_step[step].add(ivx)
+
 count = 0
 god_speed = ''
 for ivy in range(-150, 150):
-    for ivx in range(200 if ivy < 0 else 20):
-        xd = 0
-        yd = 0
-        vx = ivx
-        vy = ivy
-        max_yd = float('-inf')
-        target_hit = False
-        mstep = 0
-        for step in range(250 if ivx < 20 else 20):
-            xd += vx
-            yd += vy
-            vy -= 1
-            if vx > 0:
-                vx -= 1
-            elif vx < 0:
-                vx += 0
-            if xd in range(x[0], x[1]+1) and yd in range(y[0], y[1]+1):
-                target_hit = True
-                mstep = step
-            if yd > max_yd:
-                max_yd = yd
-        if target_hit:
-            count += 1
-            if max_yd > yd_god:
-                yd_god = max_yd
-                god_speed = (ivx, ivy)
+    yd = 0
+    vy = ivy
+    max_yd = float('-inf')
+    target_hit = False
+    step = 0
+    ivxs = set()
+    for step in range(250):
+        yd += vy
+        vy -= 1
+        if yd in range(y[0], y[1]+1) and len(valid_step[step]) > 0:
+            target_hit = True
+            ivxs = ivxs.union(valid_step[step])
+        if yd > max_yd:
+            max_yd = yd
+    if target_hit and max_yd > yd_god:
+        yd_god = max_yd
+        god_speed = ivy
+    count += len(ivxs)
 
-print('Part 1: ', yd_god)
+print('Part 1: ', yd_god, god_speed)
 print('Part 2: ', count)
