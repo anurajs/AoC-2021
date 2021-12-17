@@ -27,7 +27,7 @@ for ivx in range(x[1]+1):
 
 count = 0
 god_speed = ''
-for ivy in range(y[0], max(y[0], abs(y[0]))+1):
+for ivy in range(y[0], max(y[1], abs(y[0]))+1):
     yd = 0
     vy = ivy
     max_yd = float('-inf')
