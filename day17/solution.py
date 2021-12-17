@@ -14,11 +14,11 @@ yd_god = float('-inf')
 
 valid_step = defaultdict(lambda: set())
 
-for ivx in range(200):
+for ivx in range(x[1]+1):
     xd = 0
     vx = ivx
     step = 0
-    for step in range(250):
+    for step in range(300):
         xd += vx
         if vx > 0:
             vx -= 1
@@ -27,14 +27,14 @@ for ivx in range(200):
 
 count = 0
 god_speed = ''
-for ivy in range(-150, 150):
+for ivy in range(y[0], abs(y[0])+1):
     yd = 0
     vy = ivy
     max_yd = float('-inf')
     target_hit = False
     step = 0
     ivxs = set()
-    for step in range(250):
+    for step in range(300):
         yd += vy
         vy -= 1
         if yd in range(y[0], y[1]+1) and len(valid_step[step]) > 0:
