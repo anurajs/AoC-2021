@@ -39,7 +39,7 @@ for ivy in range(y[0], max(y[1], abs(y[0]))+1):
         vy -= 1
         if yd in range(y[0], y[1]+1) and step in valid_step:
             target_hit = True
-            ivxs = ivxs.union(valid_step[step])
+            ivxs |= valid_step[step]
         if yd > max_yd:
             max_yd = yd
     if target_hit and max_yd > yd_god:
