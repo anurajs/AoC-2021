@@ -26,7 +26,6 @@ for ivx in range(x[1]+1):
             valid_step[step].add(ivx)
 
 count = 0
-god_speed = ''
 for ivy in range(y[0], max(y[1], abs(y[0]))+1):
     yd = 0
     vy = ivy
@@ -44,7 +43,7 @@ for ivy in range(y[0], max(y[1], abs(y[0]))+1):
             max_yd = yd
     if target_hit and max_yd > yd_god:
         yd_god = max_yd
-        god_speed = ivy
+        god_speed = (ivxs, ivy)
     count += len(ivxs)
 
 print('Part 1: ', yd_god, god_speed)
