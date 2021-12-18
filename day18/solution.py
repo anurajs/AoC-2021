@@ -143,8 +143,8 @@ def reduce(line):
         while root.depths[5] > 0:
             exploded = []
             explode_node(root, order, 0, exploded)
-        if find_splittable(order) != -1:
-            idx = find_splittable(order)
+        idx = find_splittable(order)
+        if idx != -1:
             split_node = order[idx]
             low = math.floor(split_node.value / 2)
             high = math.ceil(split_node.value / 2)
