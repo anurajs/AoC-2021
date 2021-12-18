@@ -86,16 +86,20 @@ def explode_node(node, order, depth, exploded):
             if left_pos > 0:
                 left_node = order[left_pos - 1]
                 left_node.update_value(left_child.value + left_node.value)
+                order[left_pos - 1] = left_node
             right_pos = order.index(right_child)
             if right_pos < len(order) - 1:
                 right_node = order[right_pos + 1]
                 right_node.update_value(right_child.value + right_node.value)
+                order[right_pos + 1] = right_node
             node.update_value(0)
             node.depths[depth] -= 1
             node.depths[left_child.depth] -= 1
             node.depths[right_child.depth] -= 1
             node.child1 = None
             node.child2 = None
+            order[left_pos] = node
+            order.remove(right_child)
             exploded.append(True)
             return
         explode_node(node.child1, order, depth + 1, exploded)
@@ -126,17 +130,20 @@ def get_magnitude(root):
 def reduce(line):
     root = Node(line)
     create_tree(root, line)
+    order = []
+    traverse_tree(root, order)
     while root.depths[5] > 0 or has_split(root):
         while root.depths[5] > 0:
             exploded = []
-            order = []
-            traverse_tree(root, order)
             explode_node(root, order, 0, exploded)
         if split_node := has_split(root):
             low = math.floor(split_node.value / 2)
             high = math.ceil(split_node.value / 2)
             left_node = Node(low, split_node, split_node.depth+1)
             right_node = Node(high, split_node, split_node.depth+1)
+            idx = order.index(split_node)
+            order[idx] = left_node
+            order.insert(idx + 1, right_node)
             split_node.child1 = left_node
             split_node.child2 = right_node
             split_node.update_value([left_node.value] + [right_node.value])
