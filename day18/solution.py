@@ -115,6 +115,13 @@ def create_list_from_tree(node):
         return [create_list_from_tree(node.child1)] + [create_list_from_tree(node.child2)]
 
 
+def find_splittable(order):
+    for index, item in enumerate(order):
+        if item.value > 9:
+            return index
+    return -1
+
+
 def get_magnitude(root):
     if root.is_leaf():
         return root.value
@@ -132,16 +139,17 @@ def reduce(line):
     create_tree(root, line)
     order = []
     traverse_tree(root, order)
-    while root.depths[5] > 0 or has_split(root):
+    while root.depths[5] > 0 or find_splittable(order) != -1:
         while root.depths[5] > 0:
             exploded = []
             explode_node(root, order, 0, exploded)
-        if split_node := has_split(root):
+        if find_splittable(order) != -1:
+            idx = find_splittable(order)
+            split_node = order[idx]
             low = math.floor(split_node.value / 2)
             high = math.ceil(split_node.value / 2)
             left_node = Node(low, split_node, split_node.depth+1)
             right_node = Node(high, split_node, split_node.depth+1)
-            idx = order.index(split_node)
             order[idx] = left_node
             order.insert(idx + 1, right_node)
             split_node.child1 = left_node
