@@ -59,7 +59,7 @@ def create_tree(parent, kids):
 
 
 def traverse_tree(node, order):
-    if isinstance(node, Node):
+    if node is not None:
         traverse_tree(node.child1, order)
         if node.is_leaf():
             order.append(node)
@@ -96,7 +96,7 @@ def explode_node(node, order, depth, exploded):
             node.depths[right_child.depth] -= 1
             node.child1 = None
             node.child2 = None
-            exploded.append(node)
+            exploded.append(True)
             return
         explode_node(node.child1, order, depth + 1, exploded)
         explode_node(node.child2, order, depth + 1, exploded)
@@ -139,7 +139,7 @@ def reduce(line):
             right_node = Node(high, split_node, split_node.depth+1)
             split_node.child1 = left_node
             split_node.child2 = right_node
-            split_node.update_value(create_list_from_tree(split_node))
+            split_node.update_value([left_node.value] + [right_node.value])
     return root
 
 
