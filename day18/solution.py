@@ -58,20 +58,19 @@ def traverse_tree(node, order):
 
 
 def has_split(node):
-    if isinstance(node, Node):
+    if node is not None:
         if node.is_leaf() and node.value > 9:
             return node
         return has_split(node.child1) or has_split(node.child2)
-    return False
 
 
 def explode_node(node, order, depth, exploded):
     if exploded:
         return
-    if isinstance(node, Node):
+    if node is not None:
         if node.is_leaf():
             return
-        if node.depth >= 4:
+        if node.depth == 4:
             left_child = node.child1
             right_child = node.child2
             left_pos = order.index(left_child)
@@ -150,7 +149,6 @@ root = reduce(data[0])
 for i in range(len(data) - 1):
     b = reduce(data[i + 1])
     root = reduce([root.value] + [b.value])
-
 print('Part 1: ', get_magnitude(root))
 
 max_magnitude = 0
