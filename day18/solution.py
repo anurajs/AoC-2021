@@ -1,5 +1,6 @@
 import sys
 import math
+from collections import defaultdict
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
     data = file.readlines()
@@ -8,12 +9,19 @@ data = [eval(x.strip()) for x in data]
 
 
 class Node:
+
     def __init__(self, value=None, parent=None, depth=0):
         self.value = value
         self.child1 = None
         self.child2 = None
         self.parent = parent
         self.depth = depth
+        if parent is None:
+            self.depths = defaultdict(lambda: 0)
+            self.depths[0] = 1
+        else:
+            self.depths = parent.depths
+            self.depths[depth] += 1
 
     def add_children(self, node1, node2):
         self.child1 = node1
@@ -34,7 +42,8 @@ class Node:
         self.value = value
         if self.parent is None:
             return
-        self.parent.update_value(create_list_from_tree(self.parent))
+        self.parent.update_value(
+            [self.parent.child1.value] + [self.parent.child2.value])
 
 
 def create_tree(parent, kids):
@@ -70,7 +79,7 @@ def explode_node(node, order, depth, exploded):
     if node is not None:
         if node.is_leaf():
             return
-        if node.depth == 4:
+        if node.depth >= 4:
             left_child = node.child1
             right_child = node.child2
             left_pos = order.index(left_child)
@@ -82,6 +91,9 @@ def explode_node(node, order, depth, exploded):
                 right_node = order[right_pos + 1]
                 right_node.update_value(right_child.value + right_node.value)
             node.update_value(0)
+            node.depths[depth] -= 1
+            node.depths[left_child.depth] -= 1
+            node.depths[right_child.depth] -= 1
             node.child1 = None
             node.child2 = None
             exploded.append(node)
@@ -99,14 +111,6 @@ def create_list_from_tree(node):
         return [create_list_from_tree(node.child1)] + [create_list_from_tree(node.child2)]
 
 
-def get_depth(node):
-    if node is None:
-        return 0
-    if node.is_leaf():
-        return 0
-    return 1 + max(get_depth(node.child1), get_depth(node.child2))
-
-
 def get_magnitude(root):
     if root.is_leaf():
         return root.value
@@ -122,15 +126,12 @@ def get_magnitude(root):
 def reduce(line):
     root = Node(line)
     create_tree(root, line)
-    while get_depth(root) > 4 or has_split(root):
-        while get_depth(root) > 4:
+    while root.depths[5] > 0 or has_split(root):
+        while root.depths[5] > 0:
             exploded = []
             order = []
             traverse_tree(root, order)
             explode_node(root, order, 0, exploded)
-            line = create_list_from_tree(root)
-            root.value = create_list_from_tree(root)
-            create_tree(root, line)
         if split_node := has_split(root):
             low = math.floor(split_node.value / 2)
             high = math.ceil(split_node.value / 2)
@@ -138,10 +139,7 @@ def reduce(line):
             right_node = Node(high, split_node, split_node.depth+1)
             split_node.child1 = left_node
             split_node.child2 = right_node
-            split_node.value = create_list_from_tree(split_node)
-            line = create_list_from_tree(root)
-            root.value = create_list_from_tree(root)
-            create_tree(root, line)
+            split_node.update_value(create_list_from_tree(split_node))
     return root
 
 
