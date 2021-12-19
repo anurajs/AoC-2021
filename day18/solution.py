@@ -1,11 +1,12 @@
 import sys
 import math
 from collections import defaultdict
+import json
 path = sys.argv[1] if len(sys.argv) > 1 else 'puzzle.txt'
 with open(path) as file:
     data = file.readlines()
 
-data = [eval(x.strip()) for x in data]
+data = [json.loads(x.strip()) for x in data]
 
 
 class Node:
