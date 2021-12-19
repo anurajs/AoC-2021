@@ -12,9 +12,9 @@ data = [json.loads(x.strip()) for x in data]
 class Node:
 
     def __init__(self, value=None, parent=None, depth=0):
-        self.value = value
         self.child1 = None
         self.child2 = None
+        self.value = value
         self.parent = parent
         self.depth = depth
         if parent is None:
@@ -23,18 +23,6 @@ class Node:
         else:
             self.depths = parent.depths
             self.depths[depth] += 1
-
-    def add_children(self, node1, node2):
-        self.child1 = node1
-        self.child2 = node2
-
-    def get_sibling(self):
-        if self.parent is not None:
-            if self.parent.child1 == self:
-                return self.parent.child2
-            else:
-                return self.parent.child1
-        return None
 
     def is_leaf(self):
         return self.child1 is None and self.child2 is None
@@ -53,9 +41,8 @@ def create_tree(parent, kids):
         node2 = Node(kids[1], parent, parent.depth+1)
         create_tree(node1, kids[0])
         create_tree(node2, kids[1])
-        parent.add_children(node1, node2)
-        return
-    else:
+        parent.child1 = node1
+        parent.child2 = node2
         return
 
 
@@ -67,16 +54,7 @@ def traverse_tree(node, order):
         traverse_tree(node.child2, order)
 
 
-def has_split(node):
-    if node is not None:
-        if node.is_leaf() and node.value > 9:
-            return node
-        return has_split(node.child1) or has_split(node.child2)
-
-
-def explode_node(node, order, depth, exploded):
-    if exploded:
-        return
+def explode_node(node, order):
     if node is not None:
         if node.is_leaf():
             return
@@ -94,17 +72,16 @@ def explode_node(node, order, depth, exploded):
                 right_node.update_value(right_child.value + right_node.value)
                 order[right_pos + 1] = right_node
             node.update_value(0)
-            node.depths[depth] -= 1
+            node.depths[node.depth] -= 1
             node.depths[left_child.depth] -= 1
             node.depths[right_child.depth] -= 1
             node.child1 = None
             node.child2 = None
             order[left_pos] = node
             del order[right_pos]
-            exploded.append(True)
             return
-        explode_node(node.child1, order, depth + 1, exploded)
-        explode_node(node.child2, order, depth + 1, exploded)
+        explode_node(node.child1, order)
+        explode_node(node.child2, order)
 
 
 def create_list_from_tree(node):
@@ -142,8 +119,7 @@ def reduce(line):
     traverse_tree(root, order)
     while root.depths[5] > 0 or find_splittable(order) != -1:
         while root.depths[5] > 0:
-            exploded = []
-            explode_node(root, order, 0, exploded)
+            explode_node(root, order)
         if (idx := find_splittable(order)) != -1:
             split_node = order[idx]
             low = math.floor(split_node.value / 2)
