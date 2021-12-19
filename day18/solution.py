@@ -108,9 +108,12 @@ def reduce(line):
     create_tree(root, line)
     order = []
     traverse_tree(root, order)
-    while root.depths[5] > 0 or find_splittable(order) != -1:
+    change = True
+    while change:
+        change = False
         while root.depths[5] > 0:
             explode_node(root, order)
+            change = True
         if (idx := find_splittable(order)) != -1:
             split_node = order[idx]
             low = math.floor(split_node.value / 2)
@@ -122,6 +125,7 @@ def reduce(line):
             split_node.child1 = left_node
             split_node.child2 = right_node
             split_node.update_value([left_node.value] + [right_node.value])
+            change = True
     return root
 
 
