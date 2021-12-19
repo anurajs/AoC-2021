@@ -84,15 +84,6 @@ def explode_node(node, order):
         explode_node(node.child2, order)
 
 
-def create_list_from_tree(node):
-    if node is None:
-        return
-    if node.is_leaf():
-        return node.value
-    else:
-        return [create_list_from_tree(node.child1)] + [create_list_from_tree(node.child2)]
-
-
 def find_splittable(order):
     for index, item in enumerate(order):
         if item.value > 9:
