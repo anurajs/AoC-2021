@@ -100,7 +100,7 @@ def explode_node(node, order, depth, exploded):
             node.child1 = None
             node.child2 = None
             order[left_pos] = node
-            order.remove(right_child)
+            del order[right_pos]
             exploded.append(True)
             return
         explode_node(node.child1, order, depth + 1, exploded)
@@ -144,8 +144,7 @@ def reduce(line):
         while root.depths[5] > 0:
             exploded = []
             explode_node(root, order, 0, exploded)
-        idx = find_splittable(order)
-        if idx != -1:
+        if (idx := find_splittable(order)) != -1:
             split_node = order[idx]
             low = math.floor(split_node.value / 2)
             high = math.ceil(split_node.value / 2)
